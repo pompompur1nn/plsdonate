@@ -15,25 +15,6 @@ else
 end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/loganonline/webhooook1/main/main"))()
 task.wait(1)
---Anti-AFK
-local Players = game:GetService("Players")
-Players.LocalPlayer:Kick('unsupported executor')
-local connections = getconnections or get_signal_cons
-if connections then
-	for i,v in pairs(connections(Players.LocalPlayer.Idled)) do
-		if v["Disable"] then
-			v["Disable"](v)
-		elseif v["Disconnect"] then
-			v["Disconnect"](v)
-		end
-	end
-else
-    Players.LocalPlayer.Idled:Connect(function()
-        local VirtualUser = game:GetService("VirtualUser")
-        VirtualUser:CaptureController()
-        VirtualUser:ClickButton2(Vector2.new())
-    end)
-end
 
 --Variables
 local unclaimed = {}
