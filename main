@@ -713,7 +713,7 @@ Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function()
 end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-    game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE - tzechco / brought back by dotgg"
+    game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "PLS DONATE - fuck tzechco / brought back by logan lmao"
 end
 while task.wait(getgenv().settings.serverHopDelay * 60) do
     if not hopTimer then
