@@ -674,7 +674,7 @@ Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function()
     if getgenv().settings.webhookToggle and getgenv().settings.webhookBox then
         local LogService = Game:GetService("LogService")
         local logs = LogService:GetLogHistory()
-        --Tries to grabs donation message from logs
+        --Tries to grabs donation message from logs github.com/loganonline
         if string.find(logs[#logs].message, Players.LocalPlayer.DisplayName) then
             webhook(tostring(logs[#logs].message.. " (Total: ".. Players.LocalPlayer.leaderstats.Raised.value.. ")"))
         else
@@ -693,7 +693,7 @@ Players.LocalPlayer.leaderstats.Raised.Changed:Connect(function()
 end)
 update()
 if game:GetService("CoreGui").imgui.Windows.Window.Title.Text == "Loading..." then
-    game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "hazem lacking - duo w"
+    game:GetService("CoreGui").imgui.Windows.Window.Title.Text = "hazem lacking - duo w, also goose better is a fucking skid who copies scripts, enjoy open source"
 end
 while task.wait(getgenv().settings.serverHopDelay * 60) do
     if not hopTimer then
