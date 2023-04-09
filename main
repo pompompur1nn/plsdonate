@@ -82,7 +82,7 @@ if isfile("plsdonatesettings.txt") then
         task.spawn(function()
             errMsg = Instance.new("Hint")
             errMsg.Parent = game.workspace
-            errMsg.Text = tostring("Settings reset due to error: ".. er)
+            errMsg.Text = tostring("Settings reset due to error: sorry for deleting your stuff :( ".. er)
             task.wait(15)
             errMsg:Destroy()
         end)
@@ -91,7 +91,7 @@ if isfile("plsdonatesettings.txt") then
 
 end
 local sNames = {"textUpdateToggle", "textUpdateDelay", "serverHopToggle", "serverHopDelay", "hexBox", "goalBox", "webhookToggle", "webhookBox", "danceChoice", "thanksMessage", "signToggle", "customBoothText", "signUpdateToggle", "signText", "signHexBox", "autoThanks", "autoBeg", "begMessage", "begDelay", "fpsLimit", "render", "thanksDelay", "vcServer"}
-local sValues = {true, 30, true, 30, "#32CD32", 5, false, "", "Disabled", {"Thank you", "Thanks!", "ty :)", "The Quick Brown Fox Jumps Over The Lazy Dog!", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. "}, false, "GOAL: $C / $G", false, "your text here", "#ffffff", true, false, {"Please donate", "I'm so close to my goal!", "donate to me", "please"}, 300, 60, false, 3, false}
+local sValues = {true, 30, true, 30, "#32CD32", 5, false, "", "Disabled", {"Thank you", "Thanks!", "ty :)", "The Quick Brown Fox Jumps Over The Lazy Dog!", "The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal."}, false, "GOAL: $C / $G", false, "your text here", "#ffffff", true, false, {"Please donate", "I'm so close to my goal!", "donate to me", "please"}, 300, 60, false, 3, false}
 if #getgenv().settings ~= sNames then
     for i, v in ipairs(sNames) do
         if getgenv().settings[v] == nil then
